@@ -1,12 +1,12 @@
 import sys
 import numpy as np
 from Book_Management.db import database
-import Book_Management.db
 
 
 # 메뉴띄우기
 class BookMgtSystem:
     def __init__(self, filepath):
+        from Book_Management.db import database
         self.text = database(filepath)
         self.system_menu()
 
@@ -62,6 +62,7 @@ class BookMgtSystem:
         self.text.DB = np.append(self.text.DB,
                                  [[self.bookname, self.author, self.published, self.publisher, self.genre]], axis=0)
         print(self.text.DB)
+
 
     #2번(도서검색 search)
     def search(self):
@@ -201,19 +202,20 @@ class BookMgtSystem:
     def save(self):
         save_confirm = int(input("저장하려면 1을 입력 : "))
         if save_confirm ==1:
-            np.save("C:/Users/LGS1/Desktop/input1.txt", self.text.DB)
-            self.saveload = np.load("C:/Users/LGS1/Desktop/output.txt.npy")
+            np.save("C:\\Users\\LGS1\\PycharmProjects\\Book_Management\\input.txt", self.text.DB)
+            self.saveload = np.load("C:\\Users\\LGS1\\PycharmProjects\\Book_Management\\input.txt.npy")
             print(self.saveload)
 
 
     #7번(종료 finish)
     def finish(self):
-        np.save("C:/Users/LGS1/Desktop/input1.txt", self.text.DB)
-        self.saveload = np.load("C:/Users/LGS1/Desktop/output.txt.npy")
+        np.save("C:\\Users\\LGS1\\PycharmProjects\\Book_Management\\input.txt", self.text.DB)
+        self.saveload = np.load("C:\\Users\\LGS1\\PycharmProjects\\Book_Management\\input.txt.npy")
         print(self.saveload)
+        print("종료합니당 ByeBye~!~!")
         sys.exit()
 
 
 
 if __name__ == "__main__":
-    app = BookMgtSystem("input.txt")
+    program = BookMgtSystem("input.txt")
