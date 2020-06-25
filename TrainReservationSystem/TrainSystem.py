@@ -84,33 +84,33 @@ class TrainSystem:
             a, b = divmod(closed_T[0], 100)
             a = str(a)
             b = str(b)
-            if int(b) // 10 == 0:
+            if int(b) // 10 == 0:  #b가 10분, 20분, 30분...이면
                 closed_T[0] = ''.join(['0', a, ':', '0', b])
             else:
                 closed_T[0] = ''.join(['0', a, ':', b])
             print('|', end=' ')
             for a in closed_T:
                 print(a, end=' | ')
-                while True:
-                    reservation = input("\n해당 기차표를 예매하시겠습니까? [Y/N]"
-                                        "\n입력 : ")
-                    if reservation == 'Y':
-                        if List[ind][5] != "매진":
-                            reservation_list.append(List[ind])
-                            List[ind][5] = int(List[ind][5]) - 1 #잔여좌석 -1
-                            print("\n예매가 완료되었습니다.")
-                            indlist.append(ind)
-                            if List[ind][5] == 0:
-                                List[ind][5] = "매진"
-                            break
-                        else:
-                            print("\n매진됐지롱")
-                            break
-                    elif reservation == "N":
+            while True:
+                reservation = input("\n해당 기차표를 예매하시겠습니까? [Y/N]"
+                                    "\n입력 : ")
+                if reservation == 'Y':
+                    if List[ind][5] != "매진":
+                        reservation_list.append(List[ind])
+                        List[ind][5] = int(List[ind][5]) - 1  # 잔여좌석 -1
+                        print("\n예매가 완료되었습니다.")
+                        indlist.append(ind)
+                        if List[ind][5] == 0:
+                            List[ind][5] = "매진"
                         break
                     else:
-                        print("Y 또는 N을 입력하세요 !")
-                return ind
+                        print("\n매진됐지롱")
+                        break
+                elif reservation == "N":
+                    break
+                else:
+                    print("Y 또는 N을 입력하세요 !")
+            return ind
         else:
             self.train_menu()
 
@@ -138,30 +138,32 @@ class TrainSystem:
         if my_reserved_train_menu == "1":
             if ind == None:
                 print("\n예매된 기차가 없습니다.")
-            #elif reservation_list == []:
-                #print("\n예매된 기차가 없습니다.")
-        else:
-            print("\n==== 예매 내역 ====\n")
-            i = 0
-            while i < len(reservation_list):
-                a, b, c, d, e, f = reservation_list[i]
-                print(a, b, c, d, e, f)
-                i += 1
-                print(reservation_list)
-            cancel = input("\n예매를 취소하시겠습니까? [Y/N]"
-                           "\n☆ 뒤로가기"
-                           "\n입력 : ")
-            if cancel == 'Y': #잔여좌석 +1
-                if List[indlist[len(indlist) - 1]][5] == '매진':
-                    List[indlist[len(indlist) - 1]][5] = 1
-                    reservation_list.pop()
-                else:
-                    List[indlist[len(indlist) - 1]][5] = List[indlist[len(indlist) - 1]][5] + 1
-                    reservation_list.pop()
-                indlist.pop()
-                print('\n취소가 완료되었습니다.')
+            elif reservation_list == []:
+                print("\n예매된 기차가 없습니다.")
             else:
-                self.train_menu()
+                print("\n==== 예매 내역 ====\n")
+                i = 0
+                while i < len(reservation_list):
+                    a, b, c, d, e, f = reservation_list[i]
+                    print(a, b, c, d, e, f)
+                    i += 1
+                    print(reservation_list)
+
+                cancel = input("\n예매를 취소하시겠습니까? [Y/N]"
+                               "\n☆ 뒤로가기"
+                               "\n입력 : ")
+
+                if cancel == 'Y':  # 잔여좌석 +1
+                    if List[indlist[len(indlist) - 1]][5] == '매진':
+                        List[indlist[len(indlist) - 1]][5] = 1
+                        reservation_list.pop()
+                    else:
+                        List[indlist[len(indlist) - 1]][5] = List[indlist[len(indlist) - 1]][5] + 1
+                        reservation_list.pop()
+                    indlist.pop()
+                    print('\n취소가 완료되었습니다.')
+        else:
+            self.train_menu()
 
 
 # 4번
@@ -182,7 +184,7 @@ def close_time(mytime, time_list):  # 근접한 값 찾는 함수
     b = time_list.copy() # [365, 395, 435, 522]
     real_time_list = [605, 635, 715, 842]
     abs_list = []
-    for i in range(len(b)): #
+    for i in range(len(b)):
         abs_list.append(abs(a - b[i]))
     ind = abs_list.index(min(abs_list))
     return real_time_list[ind]
