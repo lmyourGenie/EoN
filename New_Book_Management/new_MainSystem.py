@@ -5,9 +5,7 @@ from New_Book_Management import new_search
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_file = os.path.join(THIS_FOLDER, 'input.txt')
 textfile_data = open(my_file,'r')
-#textfile_data = textfile_data.readlines()
 textfile_data = textfile_data.read().splitlines()
-#textfile_data = [line.rstrip('\n') for line in open(my_file, 'r')]
 
 
 # 메뉴띄우기
